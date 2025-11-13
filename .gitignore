@@ -1,38 +1,66 @@
-HELP.md
-.gradle
+### Java ###
+*.class
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+### Spring Boot ###
+target/
 build/
+out/
 !gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
-!**/src/test/**/build/
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-bin/
-!**/src/main/**/bin/
-!**/src/test/**/bin/
+### Logs ###
+*.log
+*.log.*
 
-### IntelliJ IDEA ###
-.idea
+### IDE - IntelliJ IDEA ###
+.idea/
 *.iws
 *.iml
 *.ipr
-out/
-!**/src/main/**/out/
-!**/src/test/**/out/
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-
-### VS Code ###
+### IDE - VS Code ###
 .vscode/
->>>>>>> 8348419 (init commit)
+
+### OS ###
+.DS_Store
+Thumbs.db
+
+### Gradle ###
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+.gradle/
+build/
+
+### Maven ###
+.mvn/
+!mvn/wrapper/maven-wrapper.jar
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+### Environment ###
+.env
+#application-*.yml
+#application-*.yaml
+#application-*.properties
+
+### Others ###
+*.tmp
+*.swp
+*.bak
+*.orig
+*.rej
+
+### Package Managers ###
+node_modules/
+package-lock.json
+yarn.lock
