@@ -1,0 +1,10 @@
+#!/bin/sh
+echo "Running Spotless before commit..."
+./gradlew spotlessApply > /dev/null 2>&1
+
+if [ $? -eq 0 ]; then
+  echo "Spotless formatting complete!"
+else
+  echo "Spotless formatting failed! Commit aborted."
+  exit 1
+fi
