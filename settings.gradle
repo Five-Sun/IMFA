@@ -1,1 +1,5 @@
 rootProject.name = 'imfa'
+
+include("server-api")
+include("server-auth")
+include("server-bank")
