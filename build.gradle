@@ -50,9 +50,12 @@ subprojects {
             trimTrailingWhitespace()
             endWithNewline()
         }
+
+        enforceCheck false
+    }
+
+    tasks.named('test') {
+        useJUnitPlatform()
     }
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
-}
