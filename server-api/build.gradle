@@ -6,4 +6,6 @@ dependencies {
     //Common 모듈
     implementation project(":common")
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    //JPA
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 }

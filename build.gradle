@@ -33,6 +33,9 @@ subprojects {
 
     dependencies {
         //모든 서버 공통
+        //Lombok
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
     }
 
     dependencyManagement {
