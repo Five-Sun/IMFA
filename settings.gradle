@@ -1,9 +1,8 @@
 rootProject.name = 'imfa'
 
-include("server-api")
-include("server-auth")
-include("server-bank")
-
-include 'server-api'
-include 'server-auth'
-include 'server-bank'
+include(
+    "server-api",
+    "server-auth",
+    "server-bank",
+    "common"
+)

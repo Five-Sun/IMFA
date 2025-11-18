@@ -1,5 +1,16 @@
 server:
   port: 8082
+
 spring:
   application:
     name: server-auth
+
+springdoc:
+  api-docs:
+    path: /auth-docs
+  swagger-ui:
+    path: /swagger-ui.html
+  group-configs:
+    - group: server-auth
+      paths-to-match: /auth/**
+      display-name: Auth Server

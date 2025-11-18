@@ -3,5 +3,7 @@ plugins {
 }
 
 dependencies {
+    //Common 모듈
+    implementation project(":common")
     implementation 'org.springframework.boot:spring-boot-starter-web'
 }
