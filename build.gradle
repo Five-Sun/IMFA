@@ -34,6 +34,13 @@ subprojects {
     dependencies {
         //모든 서버 공통
     }
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.boot:spring-boot-dependencies:3.5.7"
+        }
+    }
+
     spotless {
         java{
             googleJavaFormat('1.17.0')

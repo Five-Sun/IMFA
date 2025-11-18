@@ -1,5 +1,16 @@
 server:
   port: 8083
+
 spring:
   application:
     name: server-bank
+
+springdoc:
+  api-docs:
+    path: /bank-docs
+  swagger-ui:
+    path: /swagger-ui.html
+  group-configs:
+    - group: server-bank
+      paths-to-match: /bank/**
+      display-name: Bank Server

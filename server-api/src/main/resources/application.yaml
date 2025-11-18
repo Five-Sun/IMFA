@@ -4,3 +4,13 @@ server:
 spring:
   application:
     name: server-api
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+  group-configs:
+    - group: server-api
+      paths-to-match: /api/**, /**
+      display-name: API Server
