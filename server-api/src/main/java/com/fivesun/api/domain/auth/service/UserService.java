@@ -24,13 +24,16 @@ public class UserService {
               return user;
             })
         .orElseGet(
-            () ->
-                userRepository.save(
-                    User.builder()
-                        .provider(Provider.KAKAO)
-                        .sub(sub)
-                        .email(email)
-                        .nickname(nickname)
-                        .build()));
+            () -> {
+              User newUser = createUser(sub, email, nickname, Provider.KAKAO);
+              newUser.updateLoginTime();
+              return newUser;
+            });
+  }
+
+  @Transactional
+  public User createUser(String sub, String email, String nickname, Provider provider) {
+    return userRepository.save(
+        User.builder().provider(provider).sub(sub).email(email).nickname(nickname).build());
   }
 }

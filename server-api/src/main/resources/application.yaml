@@ -4,6 +4,37 @@ server:
 spring:
   application:
     name: server-api
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: https://kauth.kakao.com/.well-known/jwks.json
+  datasource:
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+auth:
+  jwt:
+    secret: ${AUTH_JWT_SECRET}
+    access-token-validity: ${AUTH_ACCESS_VALIDITY}
+    refresh-token-validity: ${AUTH_REFRESH_VALIDITY}
+
+oauth:
+  kakao:
+    client-id: ${KAKAO_CLIENT_ID}
+    client-secret: ${KAKAO_CLIENT_SECRET}
+    redirect-uri: ${KAKAO_REDIRECT_URI}
+    token-uri: https://kauth.kakao.com/oauth/token
+    auth-uri: https://kauth.kakao.com/oauth/authorize
 
 springdoc:
   api-docs:
