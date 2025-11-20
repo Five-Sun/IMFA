@@ -16,6 +16,15 @@ import com.fivesun.api.security.JwtAuthenticationFilter;
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
+  private static final String[] SWAGGER_WHITELIST = {
+    "/swagger-ui",
+    "/swagger-ui/**",
+    "/v3/api-docs/**",
+    "/api-docs/**",
+    "/swagger-resources/**",
+    "/webjars/**",
+    "/auth/**"
+  };
 
   @Bean
   public SecurityFilterChain securityFilterChain(
@@ -27,10 +36,7 @@ public class SecurityConfig {
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(
             auth ->
-                auth.requestMatchers("/swagger-ui/**", "api-doc/**", "auth/**")
-                    .permitAll()
-                    .anyRequest()
-                    .authenticated());
+                auth.requestMatchers(SWAGGER_WHITELIST).permitAll().anyRequest().authenticated());
 
     // JWT 인증 필터만 등록 (여기서 IMFA AccessToken 검증)
     http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

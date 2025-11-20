@@ -18,7 +18,7 @@ public class KakaoLoginUrlService {
         .queryParam("client_id", kakaoProperties.clientId())
         .queryParam("redirect_uri", kakaoProperties.redirectUri())
         .queryParam("response_type", "code")
-        .queryParam("scope", "openid profile account_email")
+        .queryParam("scope", "openid profile_nickname account_email")
         .toUriString();
   }
 }

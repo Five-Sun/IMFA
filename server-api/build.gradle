@@ -8,8 +8,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     //JPA
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    //dotenv 라이브러리
-    implementation 'me.paulschwarz:spring-dotenv:2.5.4'
     //Spring Security
     implementation 'org.springframework.boot:spring-boot-starter-security'
     //JWT 생성용
