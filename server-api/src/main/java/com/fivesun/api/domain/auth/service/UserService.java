@@ -1,19 +1,31 @@
 package com.fivesun.api.domain.auth.service;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fivesun.api.domain.auth.constant.Provider;
+import com.fivesun.api.domain.auth.dto.response.UserResponse;
 import com.fivesun.api.domain.auth.entity.User;
 import com.fivesun.api.domain.auth.repository.UserRepository;
+import com.fivesun.api.security.JwtUserPrincipal;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
+
   private final UserRepository userRepository;
 
+  /**
+   * 카카오 회원가입
+   *
+   * @param sub
+   * @param email
+   * @param nickname
+   * @return
+   */
   @Transactional
   public User upsertKakaoUser(String sub, String email, String nickname) {
     return userRepository
@@ -31,9 +43,30 @@ public class UserService {
             });
   }
 
+  /**
+   * 회원 가입
+   *
+   * @param sub
+   * @param email
+   * @param nickname
+   * @param provider
+   * @return
+   */
   @Transactional
   public User createUser(String sub, String email, String nickname, Provider provider) {
     return userRepository.save(
         User.builder().provider(provider).sub(sub).email(email).nickname(nickname).build());
+  }
+
+  public UserResponse selectMe(Authentication authentication) {
+    JwtUserPrincipal principal = (JwtUserPrincipal) authentication.getPrincipal();
+    Long userId = principal.getUserId();
+
+    User user =
+        userRepository
+            .findById(userId)
+            .orElseThrow(() -> new IllegalArgumentException("유저를 찾을 수 없습니다."));
+
+    return new UserResponse(user.getId(), user.getEmail(), user.getNickname());
   }
 }

@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/auth/kakao")
+@RequestMapping("/api/auth/kakao")
 @Tag(name = "Kakao Auth Controller", description = "카카오 로그인")
 public class KakaoAuthController {
   private final KakaoLoginUrlService kakaoLoginUrlService;

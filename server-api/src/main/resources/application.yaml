@@ -21,6 +21,12 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}   # 없으면 비워둠
+      timeout: 6000
 
 logging:
   level:
@@ -29,11 +35,9 @@ logging:
     org.springframework.web: DEBUG
     # JPA SQL 로그
     org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
     # 필요할 때만 활성화 (Swagger 403, JWT 필터 문제 등)
     org.springframework.security: DEBUG
-    # 우리 프로젝트 패키지
-    com.fivesun: DEBUG
+
 
 auth:
   jwt:
