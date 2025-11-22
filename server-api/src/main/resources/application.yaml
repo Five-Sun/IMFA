@@ -60,5 +60,5 @@ springdoc:
     path: /swagger-ui.html
   group-configs:
     - group: server-api
-      paths-to-match: /api/**, /**
+      paths-to-match: /api/**
       display-name: API Server

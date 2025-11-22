@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fivesun.api.domain.auth.constant.Provider;
 import com.fivesun.api.domain.auth.dto.response.UserResponse;
 import com.fivesun.api.domain.auth.entity.User;
+import com.fivesun.api.domain.auth.repository.RefreshTokenRepository;
 import com.fivesun.api.domain.auth.repository.UserRepository;
 import com.fivesun.api.security.JwtUserPrincipal;
 
@@ -17,9 +18,10 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 
   private final UserRepository userRepository;
+  private final RefreshTokenRepository refreshTokenRepository;
 
   /**
-   * 카카오 회원가입
+   * 카카오 회원가입 및 로그인
    *
    * @param sub
    * @param email
@@ -58,6 +60,12 @@ public class UserService {
         User.builder().provider(provider).sub(sub).email(email).nickname(nickname).build());
   }
 
+  /**
+   * 유저 정보 조회
+   *
+   * @param authentication
+   * @return
+   */
   public UserResponse selectMe(Authentication authentication) {
     JwtUserPrincipal principal = (JwtUserPrincipal) authentication.getPrincipal();
     Long userId = principal.getUserId();
@@ -68,5 +76,10 @@ public class UserService {
             .orElseThrow(() -> new IllegalArgumentException("유저를 찾을 수 없습니다."));
 
     return new UserResponse(user.getId(), user.getEmail(), user.getNickname());
+  }
+
+  public void logout(Authentication authentication) {
+    Long userId = ((JwtUserPrincipal) authentication.getPrincipal()).getUserId();
+    refreshTokenRepository.delete(userId);
   }
 }
