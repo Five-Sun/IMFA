@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 
 import com.fivesun.api.domain.auth.config.JwtProperties;
 
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
@@ -35,18 +34,19 @@ public class JwtProvider {
         .compact();
   }
 
-  public Long validateAndGetUserId(String token) {
-    try {
-      Claims claims =
-          Jwts.parser()
-              .verifyWith(Keys.hmacShaKeyFor(jwtProperties.secret().getBytes()))
-              .build()
-              .parseSignedClaims(token)
-              .getPayload();
+  /** refreshToken 에서 userId(sub) 추출 */
+  public Long parseUserId(String token) {
+    var parsed =
+        Jwts.parser()
+            .verifyWith(Keys.hmacShaKeyFor(jwtProperties.secret().getBytes()))
+            .build()
+            .parseSignedClaims(token);
 
-      return Long.valueOf(claims.getSubject());
-    } catch (Exception e) {
-      return null;
-    }
+    return Long.valueOf(parsed.getPayload().getSubject());
+  }
+
+  /** refreshToken 유효시간 가져오기 */
+  public long getRefreshTokenValidity() {
+    return jwtProperties.refreshTokenValidity();
   }
 }

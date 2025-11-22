@@ -14,9 +14,11 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.5'
-
     // Kakao id_token 검증용 Nimbus decoder (이게 oauth2-resource-server 내부에 있음)
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    //Redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
 
     runtimeOnly 'com.mysql:mysql-connector-j:8.3.0'
 }

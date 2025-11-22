@@ -11,6 +11,8 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.fivesun.api.security.JwtAccessDeniedHandler;
+import com.fivesun.api.security.JwtAuthenticationEntryPoint;
 import com.fivesun.api.security.JwtAuthenticationFilter;
 
 @Configuration
@@ -23,17 +25,23 @@ public class SecurityConfig {
     "/api-docs/**",
     "/swagger-resources/**",
     "/webjars/**",
-    "/auth/**"
+    "/api/auth/**"
   };
 
   @Bean
   public SecurityFilterChain securityFilterChain(
-      HttpSecurity http, JwtAuthenticationFilter jwtFilter) throws Exception {
+      HttpSecurity http,
+      JwtAuthenticationFilter jwtFilter,
+      JwtAuthenticationEntryPoint entryPoint,
+      JwtAccessDeniedHandler accessDeniedHandler)
+      throws Exception {
     http.csrf(AbstractHttpConfigurer::disable)
         .formLogin(AbstractHttpConfigurer::disable)
         .httpBasic(AbstractHttpConfigurer::disable)
         .sessionManagement(
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .exceptionHandling(
+            ex -> ex.authenticationEntryPoint(entryPoint).accessDeniedHandler(accessDeniedHandler))
         .authorizeHttpRequests(
             auth ->
                 auth.requestMatchers(SWAGGER_WHITELIST).permitAll().anyRequest().authenticated());

@@ -31,13 +31,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     String token = header.substring(7);
-    Long userId = jwtProvider.validateAndGetUserId(token);
+    try {
+      Long userId = jwtProvider.parseUserId(token);
 
-    if (userId != null) {
+      // 인증 객체 생성 후 SecurityContext 저장
       JwtUserPrincipal principal = new JwtUserPrincipal(userId);
       var auth =
           new UsernamePasswordAuthenticationToken(principal, null, principal.getAuthorities());
+
       SecurityContextHolder.getContext().setAuthentication(auth);
+    } catch (Exception e) {
+      // 토큰 오류는 이후 예외 핸들러에서
+      SecurityContextHolder.clearContext();
     }
+
+    filterChain.doFilter(request, response);
   }
 }
