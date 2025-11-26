@@ -9,6 +9,7 @@ import com.fivesun.api.domain.auth.client.KakaoOAuthClient;
 import com.fivesun.api.domain.auth.config.JwtProperties;
 import com.fivesun.api.domain.auth.config.KakaoOAuthProperties;
 import com.fivesun.api.domain.auth.dto.response.KakaoCallbackResponse;
+import com.fivesun.api.domain.auth.dto.response.KakaoLoginUrlResponse;
 import com.fivesun.api.domain.auth.dto.response.KakaoTokenResponse;
 import com.fivesun.api.domain.auth.entity.User;
 import com.fivesun.api.domain.auth.repository.RefreshTokenRepository;
@@ -33,13 +34,14 @@ public class KakaoAuthService {
    *
    * @return
    */
-  public String generateLoginUrl() {
-    return UriComponentsBuilder.fromHttpUrl(kakaoProperties.authUri())
-        .queryParam("client_id", kakaoProperties.clientId())
-        .queryParam("redirect_uri", kakaoProperties.redirectUri())
-        .queryParam("response_type", "code")
-        .queryParam("scope", "openid profile_nickname account_email")
-        .toUriString();
+  public KakaoLoginUrlResponse generateLoginUrl() {
+    return new KakaoLoginUrlResponse(
+        UriComponentsBuilder.fromHttpUrl(kakaoProperties.authUri())
+            .queryParam("client_id", kakaoProperties.clientId())
+            .queryParam("redirect_uri", kakaoProperties.redirectUri())
+            .queryParam("response_type", "code")
+            .queryParam("scope", "openid profile_nickname account_email")
+            .toUriString());
   }
 
   /**

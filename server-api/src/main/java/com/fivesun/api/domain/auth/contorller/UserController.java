@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fivesun.api.domain.auth.dto.response.UserResponse;
 import com.fivesun.api.domain.auth.service.UserService;
+import com.fivesun.common.response.ApiResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,12 +23,14 @@ public class UserController {
 
   @GetMapping("/me")
   @Operation(summary = "유저 정보 조회 요청")
-  public UserResponse getMe(Authentication authentication) {
-    return userService.selectMe(authentication);
+  public ApiResponse<UserResponse> getMe(Authentication authentication) {
+    UserResponse response = userService.selectMe(authentication);
+    return ApiResponse.ok(response);
   }
 
   @PostMapping("/logout")
-  public void logout(Authentication authentication) {
+  public ApiResponse<Void> logout(Authentication authentication) {
     userService.logout(authentication);
+    return ApiResponse.ok();
   }
 }

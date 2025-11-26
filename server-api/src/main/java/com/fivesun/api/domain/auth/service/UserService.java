@@ -10,6 +10,8 @@ import com.fivesun.api.domain.auth.entity.User;
 import com.fivesun.api.domain.auth.repository.RefreshTokenRepository;
 import com.fivesun.api.domain.auth.repository.UserRepository;
 import com.fivesun.api.security.JwtUserPrincipal;
+import com.fivesun.common.exception.CommonException;
+import com.fivesun.common.response.ErrorCode;
 
 import lombok.RequiredArgsConstructor;
 
@@ -71,9 +73,7 @@ public class UserService {
     Long userId = principal.getUserId();
 
     User user =
-        userRepository
-            .findById(userId)
-            .orElseThrow(() -> new IllegalArgumentException("유저를 찾을 수 없습니다."));
+        userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND));
 
     return new UserResponse(user.getId(), user.getEmail(), user.getNickname());
   }

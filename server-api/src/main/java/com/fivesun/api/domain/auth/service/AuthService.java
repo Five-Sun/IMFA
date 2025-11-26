@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import com.fivesun.api.domain.auth.dto.response.TokenResponse;
 import com.fivesun.api.domain.auth.repository.RefreshTokenRepository;
 import com.fivesun.api.security.JwtProvider;
+import com.fivesun.common.exception.CommonException;
+import com.fivesun.common.response.ErrorCode;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,7 +31,7 @@ public class AuthService {
     String stored = refreshTokenRepository.get(userId);
     if (stored == null || !stored.equals(refreshToken)) {
       // 토큰 오류는 이후 예외 핸들러에서
-      throw new IllegalArgumentException("유효하지 않은 refresh token");
+      throw new CommonException(ErrorCode.INVALID_TOKEN);
     }
 
     // 3) 새 토큰 발급

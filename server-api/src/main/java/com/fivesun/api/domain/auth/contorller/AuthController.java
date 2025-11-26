@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fivesun.api.domain.auth.dto.request.RefreshRequest;
 import com.fivesun.api.domain.auth.dto.response.TokenResponse;
 import com.fivesun.api.domain.auth.service.AuthService;
+import com.fivesun.common.response.ApiResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -23,7 +24,8 @@ public class AuthController {
 
   @PostMapping("/refresh")
   @Operation(summary = "토큰 재발급 요청")
-  public TokenResponse refresh(@RequestBody RefreshRequest request) {
-    return authService.refreshTokens(request.refreshToken());
+  public ApiResponse<TokenResponse> refresh(@RequestBody RefreshRequest request) {
+    TokenResponse response = authService.refreshTokens(request.refreshToken());
+    return ApiResponse.ok(response);
   }
 }
