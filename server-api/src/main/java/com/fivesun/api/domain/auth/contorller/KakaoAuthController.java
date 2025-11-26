@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fivesun.api.domain.auth.dto.response.KakaoCallbackResponse;
 import com.fivesun.api.domain.auth.dto.response.KakaoLoginUrlResponse;
 import com.fivesun.api.domain.auth.service.KakaoAuthService;
+import com.fivesun.common.response.ApiResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,14 +23,15 @@ public class KakaoAuthController {
 
   @GetMapping("/login-url")
   @Operation(summary = "Kakao 로그인 URL 요청")
-  public KakaoLoginUrlResponse getLoginUrl() {
-    String loginUrl = kakaoAuthService.generateLoginUrl();
-    return new KakaoLoginUrlResponse(loginUrl);
+  public ApiResponse<KakaoLoginUrlResponse> getLoginUrl() {
+    KakaoLoginUrlResponse response = kakaoAuthService.generateLoginUrl();
+    return ApiResponse.ok(response);
   }
 
   @GetMapping("/callback")
   @Operation(summary = "Kakao 로그인 callback 요청")
-  public KakaoCallbackResponse kakaoCallback(@RequestParam("code") String code) {
-    return kakaoAuthService.handleCallback(code);
+  public ApiResponse<KakaoCallbackResponse> kakaoCallback(@RequestParam("code") String code) {
+    KakaoCallbackResponse response = kakaoAuthService.handleCallback(code);
+    return ApiResponse.ok(response);
   }
 }
